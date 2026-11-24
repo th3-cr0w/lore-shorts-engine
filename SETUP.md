@@ -304,7 +304,13 @@ and check the table below.
   check in the week's script doc, then set the Status to `Checked`. Visuals
   are only collected after that, so nothing is downloaded for a script you
   then change. Record, drop the voice file in the short's folder, and the
-  video arrives on Telegram.
+  video lands in that folder as `W1-1.mp4`, with `W1-1.post.txt` beside it
+  (QA result plus ready-to-copy titles and captions per platform). Telegram
+  is optional: without its secrets, the pipeline just skips those messages.
+* **Google login expired:** while the Google app is in Testing mode, the
+  refresh token lasts 7 days. A run then fails with "Google login expired"
+  and GitHub emails you. Redo the OAuth Playground part of step 4 (signed in
+  as the channel account) and update the `GOOGLE_OAUTH_REFRESH_TOKEN` secret.
 * **Redo the visuals for a short:** delete `assets/.done` (and any file you
   want replaced). The next hourly run fills in what's missing.
 * **Use your own picture or clip for line 3:** put `03.jpg` (or `03.png` or

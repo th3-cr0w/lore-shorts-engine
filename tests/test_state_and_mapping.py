@@ -189,3 +189,29 @@ def test_text_lines_with_art_get_a_background():
     assert gather.wants_asset({"shot": "TEXT", "art_id": "A048"})
     assert gather.wants_asset({"shot": "ART", "art_id": "A007"})
     assert gather.wants_asset({"shot": "STOCK"})
+
+
+def test_expired_login_gives_clear_message():
+    import pytest
+    from google.auth.exceptions import RefreshError
+
+    class Expired:
+        def refresh(self, request):
+            raise RefreshError("invalid_grant: Token has been expired or revoked.")
+
+    with pytest.raises(RuntimeError) as err:
+        g.check_login(Expired())
+    msg = str(err.value)
+    assert "GOOGLE_OAUTH_REFRESH_TOKEN" in msg and "7 days" in msg
+    assert "invalid_grant" in msg
+
+
+def test_working_login_passes_through():
+    class Fine:
+        refreshed = False
+
+        def refresh(self, request):
+            self.refreshed = True
+
+    creds = Fine()
+    assert g.check_login(creds) is creds and creds.refreshed

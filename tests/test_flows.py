@@ -197,6 +197,10 @@ def test_cut_flow(drive, make_sheets, tmp_path, monkeypatch):
     assert seen["voice"] == b"voice"
 
     assert drive.find(short, "W1-1.mp4") and drive.find(short, "W1-1.qa.json")
+    post = drive.read(drive.find(short, "W1-1.post.txt")["id"])
+    post = post.decode() if isinstance(post, bytes) else post
+    assert "Nothing was posted" in post and "title: Horus" in post
+    assert "TIKTOK\n\nHorus #warhammer" in post
     qa = json.loads(drive.read(drive.find(short, "W1-1.qa.json")["id"]))
     assert qa["placeholder_lines"] == [4]
 

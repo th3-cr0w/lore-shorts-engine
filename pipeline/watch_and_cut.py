@@ -126,6 +126,13 @@ def platform_messages(spec):
     return [_as_text(copy)]
 
 
+def post_text(short_id, spec, report, placeholders):
+    """Everything needed to post, as one file saved next to the video."""
+    sections = [caption_text(short_id, spec, report, placeholders)]
+    sections += platform_messages(spec)
+    return "\n\n----------\n\n".join(sections) + "\n"
+
+
 # ---------------------------------------------------------------- tracker
 
 def today():
@@ -187,6 +194,11 @@ def cut_short(drive, sheets, sheet_id, folder, children, asset_children,
     video_item = g.upload_file(drive, folder["id"], out, children=children)
     g.upload_file(drive, folder["id"], qa_path, children=children,
                   mime="application/json")
+    # Titles and captions sit beside the video, so posting works from the
+    # Drive app alone (Telegram is optional).
+    g.upload_text(drive, folder["id"], f"{short_id}.post.txt",
+                  post_text(short_id, spec, report, placeholders), tmp,
+                  children=children)
     update_post_log(sheets, sheet_id, short_id, report["passed"], today())
 
     sent = telegram.send_video(out, caption_text(short_id, spec, report,

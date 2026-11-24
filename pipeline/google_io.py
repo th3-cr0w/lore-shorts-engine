@@ -53,10 +53,29 @@ def get_credentials(env=None):
         "GOOGLE_SERVICE_ACCOUNT_JSON (see SETUP.md, step 4).")
 
 
+LOGIN_EXPIRED = (
+    "Google login expired or was revoked. While the Google app is in "
+    "Testing mode this happens every 7 days. Fix: redo the OAuth Playground "
+    "step (SETUP.md, step 4) signed in as the channel account, then update "
+    "the GitHub secret GOOGLE_OAUTH_REFRESH_TOKEN. Google said: {detail}")
+
+
+def check_login(creds):
+    """Refresh the login once up front, so an expired token gives one clear
+    message instead of a long error from deep inside a Drive call."""
+    from google.auth.exceptions import RefreshError
+    from google.auth.transport.requests import Request
+    try:
+        creds.refresh(Request())
+    except RefreshError as exc:
+        raise RuntimeError(LOGIN_EXPIRED.format(detail=exc)) from None
+    return creds
+
+
 def services(env=None):
     """Return (drive, sheets) API clients."""
     from googleapiclient.discovery import build
-    creds = get_credentials(env)
+    creds = check_login(get_credentials(env))
     drive = build("drive", "v3", credentials=creds, cache_discovery=False)
     sheets = build("sheets", "v4", credentials=creds, cache_discovery=False)
     return drive, sheets
