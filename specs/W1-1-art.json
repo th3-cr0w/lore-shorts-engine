@@ -1,0 +1,78 @@
+{
+ "id": "W1-1-art",
+ "topic": "Horus Lupercal",
+ "series_tag": "The Primarchs \u00b7 01",
+ "test": {
+  "variable": "Hook type",
+  "value": "Shocking fact"
+ },
+ "lines": [
+  {
+   "text": "The Emperor's favourite son set the galaxy on fire.",
+   "shot": "STOCK",
+   "query": [
+    "burning city night",
+    "fire embers dark"
+   ]
+  },
+  {
+   "text": "Horus Lupercal was the first primarch the Emperor ever found.",
+   "shot": "ART",
+   "query": [
+    "gothic cathedral interior dark"
+   ],
+   "art_id": "TEST1"
+  },
+  {
+   "text": "For decades they fought side by side, conquering world after world.",
+   "shot": "STOCK",
+   "query": [
+    "space nebula",
+    "planet surface smoke"
+   ]
+  },
+  {
+   "text": "So when the Emperor went home to Terra, he gave Horus everything.",
+   "shot": "TEXT",
+   "on_screen": "Warmaster"
+  },
+  {
+   "text": "Then, on the moon of Davin, Horus was struck by a cursed blade.",
+   "shot": "ART",
+   "query": [
+    "hooded figure silhouette fog"
+   ],
+   "art_id": "TEST2"
+  },
+  {
+   "text": "As he lay dying, the Chaos gods showed him a future where his father was worshipped as a god, and Horus was forgotten.",
+   "shot": "STOCK",
+   "query": [
+    "dark smoke red light",
+    "ruined temple"
+   ]
+  },
+  {
+   "text": "Horus woke up a traitor, and half the Space Marine Legions followed him.",
+   "shot": "TEXT",
+   "on_screen": "Half the Legions"
+  },
+  {
+   "text": "The war that followed nearly ended humanity.",
+   "shot": "ART",
+   "query": [
+    "burning ruins aerial",
+    "war fire night"
+   ],
+   "art_id": "TEST1"
+  },
+  {
+   "text": "Would you have followed him? Tell me in the comments.",
+   "shot": "STOCK",
+   "query": [
+    "embers floating dark"
+   ]
+  }
+ ],
+ "end_card": "Follow for the next Primarch"
+}

@@ -1,0 +1,39 @@
+# Keep the schedules switched on.
+# On a PUBLIC repo, GitHub pauses scheduled workflows after 60 days with no
+# commits. Once a month this checks the date of the last commit and, if it is
+# more than 40 days old, commits a one-line date file so the clock resets.
+# (If the schedules ever do get paused: Actions tab -> pick the workflow ->
+# "Enable workflow".) On a private repo this is harmless and costs ~1 minute
+# a month.
+name: Keep schedules alive
+
+on:
+  schedule:
+    - cron: "29 5 1 * *"   # 05:29 UTC on the 1st of every month
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Commit a date stamp if the repo has been quiet
+        run: |
+          last=$(git log -1 --format=%ct)
+          age_days=$(( ( $(date +%s) - last ) / 86400 ))
+          echo "Last commit was $age_days days ago"
+          if [ "$age_days" -lt 40 ]; then
+            echo "Recent enough, nothing to do."
+            exit 0
+          fi
+          date -u +%Y-%m-%d > .github/keepalive.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/keepalive.txt
+          git commit -m "Keep scheduled workflows active"
+          git push

@@ -1,0 +1,79 @@
+# Cut every short whose voice recording has been uploaded to Drive, then send
+# it to Telegram. Runs every 30 minutes, or from Actions -> "Cut shorts" ->
+# "Run workflow". Most runs only look and finish in well under a minute; the
+# heavy tools (ffmpeg, Whisper, torch) install only when a short is ready.
+#
+# Private repo? Every run costs at least 1 of your 2,000 free minutes a month:
+# every 30 min = about 1,440 a month, which together with the hourly gather
+# (about 720) is MORE than 2,000. On a private repo change the cron line to
+# "13 * * * *" (hourly, about 720) and gather to every 3 hours.
+# Public repos run free, so 30 minutes is fine there.
+name: Cut shorts
+
+on:
+  schedule:
+    - cron: "13,43 * * * *"   # twice an hour (UTC)
+  workflow_dispatch:
+
+# One cut at a time; a new run waits for the current one instead of clashing.
+concurrency:
+  group: cut-shorts
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  cut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+      GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+      GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
+      GOOGLE_OAUTH_REFRESH_TOKEN: ${{ secrets.GOOGLE_OAUTH_REFRESH_TOKEN }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      TRACKER_SHEET_ID: ${{ vars.TRACKER_SHEET_ID }}
+      DRIVE_ROOT_FOLDER_ID: ${{ vars.DRIVE_ROOT_FOLDER_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install light tools
+        run: pip install -r requirements-pipeline.txt
+
+      - name: Anything ready to cut?
+        id: check
+        run: python -m pipeline.watch_and_cut --check
+
+      - name: Install ffmpeg
+        if: steps.check.outputs.needed == 'true'
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
+      - name: Restore speech and depth models
+        if: steps.check.outputs.needed == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-models-v1-whisper-small.en-depth-anything-v2-small
+
+      - name: Restore downloaded Python packages
+        if: steps.check.outputs.needed == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-engine-${{ runner.os }}-py311-${{ hashFiles('requirements.txt', 'requirements-pipeline.txt') }}
+
+      - name: Install the engine (CPU-only torch)
+        if: steps.check.outputs.needed == 'true'
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      - name: Cut
+        if: steps.check.outputs.needed == 'true'
+        run: python -m pipeline.watch_and_cut

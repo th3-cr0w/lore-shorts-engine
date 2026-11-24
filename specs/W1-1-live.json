@@ -1,0 +1,40 @@
+{
+  "id": "W1-1",
+  "topic": "Horus Lupercal",
+  "topic_number": 1,
+  "week": 1,
+  "series_tag": "The Primarchs · 01",
+  "test": {"variable": "Hook type", "value": "Shocking fact"},
+  "visual_mix": "Art-led",
+  "target_length_s": 45,
+  "lines": [
+    {"text": "The Emperor's favourite son set the galaxy on fire.", "shot": "ART", "art_id": "A037"},
+    {"text": "Horus Lupercal was the first primarch the Emperor ever found.", "shot": "ART", "art_id": "A012"},
+    {"text": "For decades they fought side by side, conquering world after world.", "shot": "ART", "art_id": "A036"},
+    {"text": "So when the Emperor went home to Terra, he gave Horus everything.", "shot": "TEXT", "on_screen": "Warmaster", "art_id": "A049"},
+    {"text": "Then, on the moon of Davin, Horus was struck by a cursed blade.", "shot": "SIL", "query": ["hooded figure silhouette fog", "dark figure smoke"]},
+    {"text": "As he lay dying, the Chaos gods showed him a future where his father was worshipped as a god, and Horus was forgotten.", "shot": "ART", "art_id": "A030"},
+    {"text": "Horus woke up a traitor, and half the Space Marine Legions followed him.", "shot": "TEXT", "on_screen": "Half the Legions", "art_id": "A016"},
+    {"text": "The war that followed nearly ended humanity.", "shot": "ART", "art_id": "A029"},
+    {"text": "Would you have followed him? Tell me in the comments.", "shot": "STOCK", "query": ["embers floating dark", "fire sparks black background"]}
+  ],
+  "end_card": "Follow for the next Primarch",
+  "platform_copy": {
+    "youtube": {
+      "title": "Why Horus Betrayed the Emperor | The Primarchs #1",
+      "description": "The Emperor's favourite son became humanity's greatest traitor. How Horus Lupercal fell, in under a minute.\n\nSources: Lexicanum (Horus); Horus Rising by Dan Abnett; False Gods by Graham McNeill.\nArt (public domain): J. M. W. Turner, Cleveland Museum of Art; Gustave Doré, Otto Bacher, Albrecht Dürer and John Martin, The Metropolitan Museum of Art; Albrecht Altdorfer, Alte Pinakothek; John Martin, Tate.\n\n#warhammer40k #40klore #shorts",
+      "pinned_comment": "Loyalist or traitor: would you have followed Horus?"
+    },
+    "instagram": {
+      "caption": "The Emperor's favourite son. The galaxy's greatest traitor. How Horus fell, and would you have followed him?\n\n#warhammer40k #40klore #horusheresy #grimdark #warhammer"
+    },
+    "tiktok": {
+      "caption": "How the Emperor's favourite son became a traitor #warhammer40k #40klore #horusheresy #grimdark"
+    }
+  },
+  "sources": [
+    "Lexicanum: Horus (lexicanum.com/wiki/Horus)",
+    "Horus Rising, Dan Abnett (Black Library)",
+    "False Gods, Graham McNeill (Black Library)"
+  ]
+}

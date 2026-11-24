@@ -1,0 +1,6 @@
+# Light install for the gather step and the "is anything ready?" check.
+# The full engine (requirements.txt) is only installed when a cut is needed.
+google-api-python-client>=2.100
+google-auth>=2.23
+requests>=2.31
+pillow>=10.0

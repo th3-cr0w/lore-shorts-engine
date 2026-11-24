@@ -1,0 +1,5 @@
+# Only for running the tests (not needed on GitHub Actions).
+-r requirements-pipeline.txt
+opencv-python-headless>=4.8
+numpy>=1.26
+pytest>=8.0

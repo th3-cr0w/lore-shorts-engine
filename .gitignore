@@ -1,0 +1,23 @@
+# Render output and scratch files (made fresh on every run)
+out/
+work/
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Large local test recordings (only samples/W1-1-test-voice.m4a is kept)
+samples/*.wav
+samples/list.txt
+
+# Never commit keys. These names cover the usual downloaded key files.
+.env
+*.env
+*service-account*.json
+*credentials*.json
+client_secret*.json
+
+# Depth maps are NOT ignored: assets/art/TEST1.depth.png is a hand-made
+# test fixture the engine reads. On GitHub Actions depth maps are written to
+# a temporary folder and never reach the repo.
