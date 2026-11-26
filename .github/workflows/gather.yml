@@ -7,8 +7,9 @@
 name: Gather visuals
 
 on:
-  schedule:
-    - cron: "7 * * * *"   # minute 7 of every hour (UTC); :00 is GitHub's busiest
+  # PAUSED 2026-11-26 (creative rework). To resume, uncomment the two lines below.
+  # schedule:
+  #   - cron: "7 * * * *"   # minute 7 of every hour (UTC); :00 is GitHub's busiest
   workflow_dispatch:
 
 # Never run two gathers at the same time.

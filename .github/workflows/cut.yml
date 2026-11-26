@@ -11,8 +11,9 @@
 name: Cut shorts
 
 on:
-  schedule:
-    - cron: "13,43 * * * *"   # twice an hour (UTC)
+  # PAUSED 2026-11-26 (creative rework). To resume, uncomment the two lines below.
+  # schedule:
+  #   - cron: "13,43 * * * *"   # twice an hour (UTC)
   workflow_dispatch:
 
 # One cut at a time; a new run waits for the current one instead of clashing.

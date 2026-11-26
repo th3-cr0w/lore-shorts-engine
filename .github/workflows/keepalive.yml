@@ -8,8 +8,9 @@
 name: Keep schedules alive
 
 on:
-  schedule:
-    - cron: "29 5 1 * *"   # 05:29 UTC on the 1st of every month
+  # PAUSED 2026-11-26 (creative rework). To resume, uncomment the two lines below.
+  # schedule:
+  #   - cron: "29 5 1 * *"   # 05:29 UTC on the 1st of every month
   workflow_dispatch:
 
 permissions:
